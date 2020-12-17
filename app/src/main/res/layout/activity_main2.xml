@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/plain_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plain" />
+
+    <CheckBox
+        android:id="@+id/bold_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bold"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/serif_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Serif"
+        android:typeface="serif" />
+
+    <CheckBox
+        android:id="@+id/italic_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Italic"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/get_view_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取CheckBox的值" />
+</LinearLayout>
