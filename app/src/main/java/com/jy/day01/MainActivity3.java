@@ -1,6 +1,8 @@
 package com.jy.day01;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.jy.day01.ui.MyViewPager;
 import com.jy.day01.ui.fragment.ShopFragment;
 
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import java.util.List;
 
 public class MainActivity3 extends AppCompatActivity {
 
-    private ViewPager viewpager;
+    private MyViewPager viewpager;
     private TabLayout tablayout;
 
     @Override
@@ -27,7 +30,7 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
     private void initView() {
-        viewpager = (ViewPager) findViewById(R.id.viewpager);
+        viewpager = (MyViewPager) findViewById(R.id.viewpager);
         tablayout = (TabLayout) findViewById(R.id.tablayout);
 
         List<Fragment> fragments = new ArrayList<>();

@@ -11,9 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabMode="scrollable" />
 
-    <androidx.viewpager.widget.ViewPager
+    <com.jy.day01.ui.MyViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

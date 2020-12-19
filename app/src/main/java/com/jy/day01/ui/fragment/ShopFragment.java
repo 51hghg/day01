@@ -2,7 +2,6 @@ package com.jy.day01.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.jy.day01.HomeActivity;
 import com.jy.day01.R;
+import com.jy.day01.base.BaseAdapter;
 import com.jy.day01.base.BaseFragment;
 import com.jy.day01.interfaces.shop.IShop;
+import com.jy.day01.model.bean.BrandBean;
+import com.jy.day01.model.bean.CategBean;
+import com.jy.day01.model.bean.DetailBean;
+import com.jy.day01.model.bean.GoodsDetailBean;
+import com.jy.day01.model.bean.GoodslistBean;
+import com.jy.day01.model.bean.NewBean;
 import com.jy.day01.model.bean.ShopBean;
+import com.jy.day01.model.bean.SubBean;
 import com.jy.day01.persenter.ShopPersenter;
+import com.jy.day01.ui.BrandActivity;
+import com.jy.day01.ui.GoodsDetailActivity;
+import com.jy.day01.ui.NewGoodActivity;
 import com.jy.day01.ui.adapter.BrandAdapter;
 import com.jy.day01.ui.adapter.CategAdapter;
 import com.jy.day01.ui.adapter.HotAdapter;
@@ -58,6 +68,10 @@ public class ShopFragment extends BaseFragment<ShopPersenter> implements IShop.V
     LinearLayout recyCateggood;
     @BindView(R.id.action_up_btn)
     LinearLayout actionUpBtn;
+    @BindView(R.id.txt_brand_title)
+    TextView txtBrandTitle;
+    @BindView(R.id.txt_newgood_title)
+    TextView txtNewgoodTitle;
     private ArrayList<ShopBean.DataBean.NewGoodsListBean> newlist;
     private NewAdapter newAdapter;
     private ArrayList<ShopBean.DataBean.HotGoodsListBean> hotlist;
@@ -103,6 +117,19 @@ public class ShopFragment extends BaseFragment<ShopPersenter> implements IShop.V
 //        recyCateggood.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 //        categAdapter = new CategAdapter(categlist, getActivity());
 //        recyCateggood.setAdapter(categAdapter);
+        txtBrandTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), BrandActivity.class));
+            }
+        });
+
+        txtNewgoodTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), NewGoodActivity.class));
+            }
+        });
     }
 
     @Override
@@ -128,6 +155,41 @@ public class ShopFragment extends BaseFragment<ShopPersenter> implements IShop.V
         }
     }
 
+    @Override
+    public void getcateg(CategBean categBean) {
+
+    }
+
+    @Override
+    public void getsub(SubBean subBean) {
+
+    }
+
+    @Override
+    public void getbrand(BrandBean brandBean) {
+
+    }
+
+    @Override
+    public void getnew(NewBean newBean) {
+
+    }
+
+    @Override
+    public void getdetail(DetailBean detailBean) {
+
+    }
+
+    @Override
+    public void getgoodlist(GoodslistBean goodslistBean) {
+
+    }
+
+    @Override
+    public void getgoodsdetail(GoodsDetailBean goodsDetailBean) {
+
+    }
+
     private void initChannel(List<ShopBean.DataBean.ChannelBean> list) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         for (int i = 0; i < list.size(); i++) {
@@ -143,7 +205,9 @@ public class ShopFragment extends BaseFragment<ShopPersenter> implements IShop.V
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    intent.putExtra("name", list.get(finalI).getName());
+                    startActivity(intent);
                 }
             });
         }
@@ -160,6 +224,15 @@ public class ShopFragment extends BaseFragment<ShopPersenter> implements IShop.V
             categAdapter = new CategAdapter(goodsList, getActivity());
             recy_home.setAdapter(categAdapter);
             recyCateggood.addView(view);
+
+            categAdapter.setOnItemClickListener(new CategAdapter.OnItemClickListener() {
+                @Override
+                public void onClick(int pos) {
+                    Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+                    intent.putExtra("goodid", goodsList.get(pos).getId());
+                    getActivity().startActivity(intent);
+                }
+            });
         }
     }
 
