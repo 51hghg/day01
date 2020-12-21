@@ -1,6 +1,7 @@
 package com.jy.day01.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
@@ -19,6 +20,8 @@ import com.jy.day01.base.BaseActivity;
 import com.jy.day01.interfaces.shop.IShop;
 import com.jy.day01.model.bean.BrandBean;
 import com.jy.day01.model.bean.CategBean;
+import com.jy.day01.model.bean.CategoryBean;
+import com.jy.day01.model.bean.CurrentBean;
 import com.jy.day01.model.bean.DetailBean;
 import com.jy.day01.model.bean.GoodsDetailBean;
 import com.jy.day01.model.bean.GoodslistBean;
@@ -26,11 +29,14 @@ import com.jy.day01.model.bean.NewBean;
 import com.jy.day01.model.bean.ShopBean;
 import com.jy.day01.model.bean.SubBean;
 import com.jy.day01.persenter.ShopPersenter;
+import com.jy.day01.ui.adapter.InfoAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -152,6 +158,16 @@ public class GoodsDetailActivity extends BaseActivity<ShopPersenter> implements 
         initInfo(goodsDetailBean.getData().getInfo());
     }
 
+    @Override
+    public void getcategory(CategoryBean categoryBean) {
+
+    }
+
+    @Override
+    public void getcurrent(CurrentBean currentBean) {
+
+    }
+
     private void initInfo(GoodsDetailBean.DataBeanX.InfoBean list) {
         infolist.add(list);
         infoAdapter.notifyDataSetChanged();
@@ -168,10 +184,26 @@ public class GoodsDetailActivity extends BaseActivity<ShopPersenter> implements 
     }
 
     private void initGoodDetail(String webData) {
+//        getHtmlImgs(webData);
         String content = h5.replace("word", webData);
         Log.i("TAG", content);
         webView.loadDataWithBaseURL("about:blank", content, "text/html", "utf-8", null);
     }
+
+//    private void getHtmlImgs(String content){
+//        String img = "<img[\\s\\S]*?>";
+//        Pattern pattern = Pattern.compile(img);
+//        Matcher matcher = pattern.matcher(content);
+//        List<String> list = new ArrayList<>();
+//        while(matcher.find()){
+//            String word = matcher.group();
+//            int start = word.indexOf("\"")+1;
+//            int end = word.indexOf(".jpg");
+//            String url = word.substring(start,end);
+//            url = url +".jpg";
+//            list.add(url);
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

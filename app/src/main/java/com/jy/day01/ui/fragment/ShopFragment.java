@@ -22,6 +22,8 @@ import com.jy.day01.base.BaseFragment;
 import com.jy.day01.interfaces.shop.IShop;
 import com.jy.day01.model.bean.BrandBean;
 import com.jy.day01.model.bean.CategBean;
+import com.jy.day01.model.bean.CategoryBean;
+import com.jy.day01.model.bean.CurrentBean;
 import com.jy.day01.model.bean.DetailBean;
 import com.jy.day01.model.bean.GoodsDetailBean;
 import com.jy.day01.model.bean.GoodslistBean;
@@ -187,6 +189,16 @@ public class ShopFragment extends BaseFragment<ShopPersenter> implements IShop.V
 
     @Override
     public void getgoodsdetail(GoodsDetailBean goodsDetailBean) {
+
+    }
+
+    @Override
+    public void getcategory(CategoryBean categoryBean) {
+
+    }
+
+    @Override
+    public void getcurrent(CurrentBean currentBean) {
 
     }
 

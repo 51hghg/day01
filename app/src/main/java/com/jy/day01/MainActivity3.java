@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.jy.day01.ui.MyViewPager;
+import com.jy.day01.ui.fragment.FenFragment;
 import com.jy.day01.ui.fragment.ShopFragment;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class MainActivity3 extends AppCompatActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new ShopFragment());
         fragments.add(new ShopFragment());
-        fragments.add(new ShopFragment());
+        fragments.add(new FenFragment());
         fragments.add(new ShopFragment());
         fragments.add(new ShopFragment());
 

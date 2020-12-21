@@ -1,4 +1,4 @@
-package com.jy.day01.ui;
+package com.jy.day01.ui.adapter;
 
 import android.content.Context;
 import android.view.View;

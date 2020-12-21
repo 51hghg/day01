@@ -5,6 +5,8 @@ import com.jy.day01.interfaces.CallBack;
 import com.jy.day01.interfaces.shop.IShop;
 import com.jy.day01.model.bean.BrandBean;
 import com.jy.day01.model.bean.CategBean;
+import com.jy.day01.model.bean.CategoryBean;
+import com.jy.day01.model.bean.CurrentBean;
 import com.jy.day01.model.bean.DetailBean;
 import com.jy.day01.model.bean.GoodsDetailBean;
 import com.jy.day01.model.bean.GoodslistBean;
@@ -125,6 +127,34 @@ public class ShopModel extends BaseModel implements IShop.Model {
                             @Override
                             public void onNext(GoodsDetailBean goodsDetailBean) {
                                 callBack.onSuccess(goodsDetailBean);
+                            }
+                        })
+        );
+    }
+
+    @Override
+    public void getcategory(CallBack callBack) {
+        addDisposable(
+                HttpManager.getHttpManager().getShopApi().getcategory()
+                        .compose(RxUtils.rxScheduler())
+                        .subscribeWith(new CommonSubscriber<CategoryBean>(callBack) {
+                            @Override
+                            public void onNext(CategoryBean categoryBean) {
+                                callBack.onSuccess(categoryBean);
+                            }
+                        })
+        );
+    }
+
+    @Override
+    public void getcurrent(CallBack callBack, int id) {
+        addDisposable(
+                HttpManager.getHttpManager().getShopApi().getcurrent(id)
+                        .compose(RxUtils.rxScheduler())
+                        .subscribeWith(new CommonSubscriber<CurrentBean>(callBack) {
+                            @Override
+                            public void onNext(CurrentBean currentBean) {
+                                callBack.onSuccess(currentBean);
                             }
                         })
         );

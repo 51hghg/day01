@@ -6,6 +6,8 @@ import com.jy.day01.interfaces.shop.IShop;
 import com.jy.day01.model.ShopModel;
 import com.jy.day01.model.bean.BrandBean;
 import com.jy.day01.model.bean.CategBean;
+import com.jy.day01.model.bean.CategoryBean;
+import com.jy.day01.model.bean.CurrentBean;
 import com.jy.day01.model.bean.DetailBean;
 import com.jy.day01.model.bean.GoodsDetailBean;
 import com.jy.day01.model.bean.GoodslistBean;
@@ -172,6 +174,44 @@ public class ShopPersenter extends BasePresenter<IShop.View> implements IShop.Pe
             public void onSuccess(Object o) {
                 if (view != null) {
                     view.getgoodsdetail((GoodsDetailBean) o);
+                }
+            }
+        }, id);
+    }
+
+    @Override
+    public void getcategory() {
+        model.getcategory(new CallBack() {
+            @Override
+            public void onFaile(String msg) {
+                if (view != null) {
+                    view.tips(msg);
+                }
+            }
+
+            @Override
+            public void onSuccess(Object o) {
+                if (view != null) {
+                    view.getcategory((CategoryBean) o);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getcurrent(int id) {
+        model.getcurrent(new CallBack() {
+            @Override
+            public void onFaile(String msg) {
+                if (view != null) {
+                    view.tips(msg);
+                }
+            }
+
+            @Override
+            public void onSuccess(Object o) {
+                if (view != null) {
+                    view.getcurrent((CurrentBean) o);
                 }
             }
         }, id);

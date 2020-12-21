@@ -6,6 +6,8 @@ import com.jy.day01.interfaces.IBaseView;
 import com.jy.day01.interfaces.IModel;
 import com.jy.day01.model.bean.BrandBean;
 import com.jy.day01.model.bean.CategBean;
+import com.jy.day01.model.bean.CategoryBean;
+import com.jy.day01.model.bean.CurrentBean;
 import com.jy.day01.model.bean.DetailBean;
 import com.jy.day01.model.bean.GoodsDetailBean;
 import com.jy.day01.model.bean.GoodslistBean;
@@ -33,6 +35,8 @@ public interface IShop {
         void getgoodlist(GoodslistBean goodslistBean);
 
         void getgoodsdetail(GoodsDetailBean goodsDetailBean);
+        void getcategory(CategoryBean categoryBean);
+        void getcurrent(CurrentBean currentBean);
     }
 
     interface Persenter extends IBasePresenter<View> {
@@ -52,6 +56,8 @@ public interface IShop {
         void getgoodslist(int id);
 
         void getgoodsdetail(int id);
+        void getcategory();
+        void getcurrent(int id);
     }
 
     interface Model extends IModel {
@@ -71,5 +77,7 @@ public interface IShop {
         void getgoodslist(CallBack callBack, int id);
 
         void getgoodsdetail(CallBack callBack, int id);
+        void getcategory(CallBack callBack);
+        void getcurrent(CallBack callBack,int id);
     }
 }

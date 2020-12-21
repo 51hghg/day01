@@ -1,5 +1,6 @@
 package com.jy.day01.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jy.day01.HomeActivity;
 import com.jy.day01.R;
 import com.jy.day01.base.BaseFragment;
 import com.jy.day01.interfaces.shop.IShop;
@@ -21,52 +23,49 @@ import com.jy.day01.model.bean.NewBean;
 import com.jy.day01.model.bean.ShopBean;
 import com.jy.day01.model.bean.SubBean;
 import com.jy.day01.persenter.ShopPersenter;
-import com.jy.day01.ui.adapter.CategoryAdapter;
-import com.jy.day01.ui.adapter.SubAdapter;
+import com.jy.day01.ui.adapter.CurrentAdapter;
+import com.jy.day01.ui.adapter.CurrentImgAdapter;
+import com.jy.day01.ui.adapter.TitleBrandAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class SubFragment extends BaseFragment<ShopPersenter> implements IShop.View {
-
+public class CategoryTabFragment extends BaseFragment<ShopPersenter> implements IShop.View {
+    @BindView(R.id.recycler_img)
+    RecyclerView recyclerImg;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
     private int id;
-    private int cid;
+    private ArrayList<CurrentBean.DataBean.CurrentCategoryBean> currentlist;
+    private CurrentAdapter currentAdapter;
+    private CurrentImgAdapter currentImgAdapter;
+    private ArrayList<CurrentBean.DataBean.CurrentCategoryBean.SubCategoryListBean> sublist;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getInt("id");
-        cid = getArguments().getInt("id");
     }
-
-    @BindView(R.id.recycler_categ)
-    RecyclerView recyclerCateg;
-    @BindView(R.id.recycler_sub)
-    RecyclerView recyclerSub;
-    private ArrayList<CategBean.DataBean.CurrentCategoryBean> categlist;
-    private ArrayList<SubBean.DataBeanX.DataBean> sublist;
-    private CategoryAdapter categoryAdapter;
-    private SubAdapter subAdapter;
 
     @Override
     public int getLatout() {
-        return R.layout.fragment_sub;
+        return R.layout.fragment_category_tab;
     }
 
     @Override
     public void initView() {
-        categlist = new ArrayList<>();
+        currentlist = new ArrayList<>();
         sublist = new ArrayList<>();
 
-        recyclerCateg.setLayoutManager(new LinearLayoutManager(getActivity()));
-        categoryAdapter = new CategoryAdapter(categlist, getActivity());
-        recyclerCateg.setAdapter(categoryAdapter);
+        recycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        currentAdapter = new CurrentAdapter(sublist, getActivity());
+        recycler.setAdapter(currentAdapter);
 
-        recyclerSub.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        subAdapter = new SubAdapter(sublist, getActivity());
-        recyclerSub.setAdapter(subAdapter);
+        recyclerImg.setLayoutManager(new LinearLayoutManager(getActivity()));
+        currentImgAdapter = new CurrentImgAdapter(currentlist, getActivity());
+        recyclerImg.setAdapter(currentImgAdapter);
     }
 
     @Override
@@ -76,8 +75,7 @@ public class SubFragment extends BaseFragment<ShopPersenter> implements IShop.Vi
 
     @Override
     public void initData() {
-        presenter.getcateg(id);
-        presenter.getsub(cid);
+        presenter.getcurrent(id);
     }
 
     @Override
@@ -87,16 +85,12 @@ public class SubFragment extends BaseFragment<ShopPersenter> implements IShop.Vi
 
     @Override
     public void getcateg(CategBean categBean) {
-        CategBean.DataBean.CurrentCategoryBean bean = categBean.getData().getCurrentCategory();
-        categlist.add(bean);
-        categoryAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void getsub(SubBean subBean) {
-        List<SubBean.DataBeanX.DataBean> data = subBean.getData().getData();
-        sublist.addAll(data);
-        subAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -131,6 +125,22 @@ public class SubFragment extends BaseFragment<ShopPersenter> implements IShop.Vi
 
     @Override
     public void getcurrent(CurrentBean currentBean) {
+        CurrentBean.DataBean.CurrentCategoryBean currentCategory = currentBean.getData().getCurrentCategory();
+        currentlist.add(currentCategory);
+        currentImgAdapter.notifyDataSetChanged();
 
+        List<CurrentBean.DataBean.CurrentCategoryBean.SubCategoryListBean> subCategoryList = currentBean.getData().getCurrentCategory().getSubCategoryList();
+        sublist.addAll(subCategoryList);
+        currentAdapter.notifyDataSetChanged();
+
+        currentAdapter.setOnItemClickListener(new TitleBrandAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int pos) {
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.putExtra("id", sublist.get(pos).getId());
+                intent.putExtra("name", sublist.get(pos).getName());
+                startActivity(intent);
+            }
+        });
     }
 }
