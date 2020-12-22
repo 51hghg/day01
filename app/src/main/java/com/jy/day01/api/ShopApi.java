@@ -1,6 +1,7 @@
 package com.jy.day01.api;
 
 import com.jy.day01.model.bean.BrandBean;
+import com.jy.day01.model.bean.CarBean;
 import com.jy.day01.model.bean.CategBean;
 import com.jy.day01.model.bean.CategoryBean;
 import com.jy.day01.model.bean.CurrentBean;
@@ -66,4 +67,8 @@ public interface ShopApi {
     @POST("api/cart/add")
     @FormUrlEncoded
     Flowable<LoginBean> addCar(@FieldMap HashMap<String,String> map);
+
+    //购物车列表
+    @GET("api/cart/index")
+    Flowable<CarBean> getCarList();
 }

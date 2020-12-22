@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.jy.day01.R;
 import com.jy.day01.base.BaseActivity;
+import com.jy.day01.base.BaseAdapter;
 import com.jy.day01.interfaces.shop.IShop;
 import com.jy.day01.model.bean.BrandBean;
 import com.jy.day01.model.bean.CategBean;
@@ -36,8 +37,11 @@ import com.jy.day01.utils.SpUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +54,7 @@ public class GoodsDetailActivity extends BaseActivity<ShopPersenter> implements 
     @BindView(R.id.txt_assess)
     TextView txtAssess;
     @BindView(R.id.webView)
-    WebView webView;
+    RecyclerView webView;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
     @BindView(R.id.img_collect)
@@ -92,6 +96,8 @@ public class GoodsDetailActivity extends BaseActivity<ShopPersenter> implements 
     private int id;
     private ArrayList<GoodsDetailBean.DataBeanX.InfoBean> infolist;
     private InfoAdapter infoAdapter;
+    private ArrayList<String> listUrl;
+    private BigAdapter bigAdapter;
 
     @Override
     protected int getLayout() {
@@ -186,26 +192,50 @@ public class GoodsDetailActivity extends BaseActivity<ShopPersenter> implements 
     }
 
     private void initGoodDetail(String webData) {
-//        getHtmlImgs(webData);
-        String content = h5.replace("word", webData);
-        Log.i("TAG", content);
-        webView.loadDataWithBaseURL("about:blank", content, "text/html", "utf-8", null);
-    }
+//        String content = h5.replace("word", webData);
+//        Log.i("TAG", content);
+//        webView.loadDataWithBaseURL("about:blank", content, "text/html", "utf-8", null);
+        listUrl = new ArrayList<>();
 
-//    private void getHtmlImgs(String content){
-//        String img = "<img[\\s\\S]*?>";
-//        Pattern pattern = Pattern.compile(img);
-//        Matcher matcher = pattern.matcher(content);
-//        List<String> list = new ArrayList<>();
-//        while(matcher.find()){
-//            String word = matcher.group();
-//            int start = word.indexOf("\"")+1;
-//            int end = word.indexOf(".jpg");
-//            String url = word.substring(start,end);
-//            url = url +".jpg";
-//            list.add(url);
-//        }
-//    }
+        String str = null;
+        String[] image = webData.split("http");
+        for (int i = 0; i < image.length; i++) {
+            String[] url = image[i].split("jpg");
+            if (url.length != 0) {
+                for (int j = 0; j < url.length - 1; j++) {
+                    str = "http" + url[0] + "jpg";
+                    //集合里是否包含了元素
+                    if (!listUrl.contains(str))
+                        listUrl.add(str);
+                }
+            }
+            String[] urls = image[i].split("png");
+            if (urls.length != 0) {
+                for (int j = 0; j < urls.length - 1; j++) {
+                    str = "http" + urls[0] + "png";
+                    if (!listUrl.contains(str))
+                        listUrl.add(str);
+                }
+            }
+        }
+        //大图
+        webView.setLayoutManager(new LinearLayoutManager(this));
+        bigAdapter = new BigAdapter(listUrl, this);
+        webView.setAdapter(bigAdapter);
+
+        bigAdapter.setOnItemClickListener(new BigAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int pos) {
+                Intent intent = new Intent(GoodsDetailActivity.this, BigActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("postion", pos);
+                bundle.putStringArrayList("urls", listUrl);
+                intent.putExtra("data", bundle);
+                startActivity(intent);
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

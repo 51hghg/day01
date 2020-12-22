@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.jy.day01.ui.MyViewPager;
 import com.jy.day01.ui.fragment.FenFragment;
+import com.jy.day01.ui.fragment.GoFragment;
 import com.jy.day01.ui.fragment.ShopFragment;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class MainActivity3 extends AppCompatActivity {
         fragments.add(new ShopFragment());
         fragments.add(new ShopFragment());
         fragments.add(new FenFragment());
-        fragments.add(new ShopFragment());
+        fragments.add(new GoFragment());
         fragments.add(new ShopFragment());
 
         viewpager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

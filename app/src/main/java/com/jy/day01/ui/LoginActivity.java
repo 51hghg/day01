@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jy.day01.R;
 import com.jy.day01.base.BaseActivity;
 import com.jy.day01.interfaces.login.ILogin;
+import com.jy.day01.model.bean.CarBean;
 import com.jy.day01.model.bean.LoginBean;
 import com.jy.day01.persenter.login.LoginPersenter;
 import com.jy.day01.utils.SpUtils;
@@ -59,6 +62,8 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
         String pw = inputPw.getText().toString();
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pw)) {
             presenter.getlogin(username, pw);
+            Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
 //            ToastUtils.s(this,getString(R.string.tips_login));
         }
@@ -70,7 +75,15 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
             SpUtils.getInstance().setValue("token", loginBean.getData().getToken());
             SpUtils.getInstance().setValue("uid", loginBean.getData().getUserInfo().getUid());
             finish();
+            Log.e("111",1+"");
         }
+        Log.e("111",2+"");
+    }
+
+    @Override
+    public void getCarList(CarBean carBean) {
+        
+
     }
 
     @Override

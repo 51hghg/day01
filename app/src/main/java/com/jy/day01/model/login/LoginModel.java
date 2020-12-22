@@ -5,6 +5,7 @@ import com.jy.day01.interfaces.CallBack;
 import com.jy.day01.interfaces.login.ILogin;
 import com.jy.day01.interfaces.shop.IShop;
 import com.jy.day01.model.bean.Bean;
+import com.jy.day01.model.bean.CarBean;
 import com.jy.day01.model.bean.LoginBean;
 import com.jy.day01.net.CommonSubscriber;
 import com.jy.day01.net.HttpManager;
@@ -18,12 +19,26 @@ public class LoginModel extends BaseModel implements ILogin.Model {
     @Override
     public void getlogin(CallBack callBack, String username, String pw) {
         addDisposable(
-                HttpManager.getHttpManager().getShopApi().getlogin(username,pw)
+                HttpManager.getHttpManager().getShopApi().getlogin(username, pw)
                         .compose(RxUtils.rxScheduler())
                         .subscribeWith(new CommonSubscriber<LoginBean>(callBack) {
                             @Override
                             public void onNext(LoginBean loginBean) {
                                 callBack.onSuccess(loginBean);
+                            }
+                        })
+        );
+    }
+
+    @Override
+    public void getCarList(CallBack callBack) {
+        addDisposable(
+                HttpManager.getHttpManager().getShopApi().getCarList()
+                        .compose(RxUtils.rxScheduler())
+                        .subscribeWith(new CommonSubscriber<CarBean>(callBack) {
+                            @Override
+                            public void onNext(CarBean carBean) {
+                                callBack.onSuccess(carBean);
                             }
                         })
         );
