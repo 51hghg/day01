@@ -2,6 +2,7 @@ package com.jy.day01.net;
 
 import com.jy.day01.api.ServiceApi;
 import com.jy.day01.api.ShopApi;
+import com.jy.day01.utils.SpUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -75,6 +76,7 @@ public class HttpManager {
         public Response intercept(Chain chain) throws IOException {
             final Request build = chain.request().newBuilder()
                     .addHeader("Authorization", "APPCODE 964e16aa1ae944e9828e87b8b9fbd30a")
+//                    .addHeader("X-Nideshop-Token", SpUtils.getInstance().getString("token"))
                     .build();
             return chain.proceed(build);
         }

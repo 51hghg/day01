@@ -3,7 +3,9 @@ package com.jy.day01.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,16 +32,16 @@ import com.jy.day01.model.bean.ShopBean;
 import com.jy.day01.model.bean.SubBean;
 import com.jy.day01.persenter.ShopPersenter;
 import com.jy.day01.ui.adapter.InfoAdapter;
+import com.jy.day01.utils.SpUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GoodsDetailActivity extends BaseActivity<ShopPersenter> implements IShop.View {
 
@@ -210,5 +212,24 @@ public class GoodsDetailActivity extends BaseActivity<ShopPersenter> implements 
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.layout_collect, R.id.layout_car, R.id.txt_buy, R.id.txt_addCar})
+    public void onViewClicked(View view) {
+        if (!TextUtils.isEmpty(SpUtils.getInstance().getString("token"))) {
+            switch (view.getId()) {
+                case R.id.layout_collect:
+                    break;
+                case R.id.layout_car:
+                    break;
+                case R.id.txt_buy:
+                    break;
+                case R.id.txt_addCar:
+                    break;
+            }
+        } else {
+            Intent intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 }
